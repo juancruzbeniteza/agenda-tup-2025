@@ -1,0 +1,54 @@
+<div id="container" class="card">
+    @if(idContacto()){
+    <h2>Editar contacto</h2>
+    } @else {
+    <h2>Nuevo contacto</h2>
+    }
+    <form (ngSubmit)="handleFormSubmission(newContactForm)" #newContactForm="ngForm">
+        <div>
+            <label for="first-name">Nombre*</label>
+            <input id="first-name" name="firstName" type="text" [ngModel]="contactoBack?.firstName" required="true" minlength="2" maxlength="20"
+                #firstName="ngModel">
+            @if (firstName.dirty && firstName.invalid) {
+            <p class="error">El nombre es obligatorio y no puede ser una sola letra</p>
+            }
+        </div>
+        <div>
+            <label for="last-name">Apellido</label>
+            <input id="last-name" name="lastName" type="text" [ngModel]="contactoBack?.lastName" maxlength="20">
+        </div>
+        <div>
+            <label for="phone">Telefono*</label>
+            <input id="phone" name="number" type="text" [ngModel]="contactoBack?.number" required="true" minlength="3" maxlength="30">
+        </div>
+        <div>
+            <label for="email">Email</label>
+            <input id="email" name="email" type="email" [ngModel]="contactoBack?.email" maxlength="40">
+        </div>
+        <div>
+            <label for="favourite">Favorito</label>
+            <input id="favourite" name="isFavorite" type="checkbox" [ngModel]="contactoBack?.isFavorite">
+        </div>
+        <div>
+            <label for="address">Direccion</label>
+            <input id="address" name="address" type="text" [ngModel]="contactoBack?.address" minlength="5">
+        </div>
+        <div>
+            <label for="company">Compañía</label>
+            <input id="company" name="company" type="text" [ngModel]="contactoBack?.company" minlength="2">
+        </div>
+        <div>
+            <label for="image">URL Imagen</label>
+            <input id="image" name="image" type="text" [ngModel]="contactoBack?.image" minlength="10">
+        </div>
+        @if (errorEnBack) {
+        <p class="error">Error indeterminado, intente nuevamente.</p>
+        }
+        @if(idContacto()){
+        <button [disabled]="newContactForm.invalid">Editar</button>
+        } @else {
+        <button [disabled]="newContactForm.invalid">Agregar</button>
+        }
+
+    </form>
+</div>ß

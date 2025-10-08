@@ -1,0 +1,7 @@
+<nav>
+    <a [routerLink]='["/"]' routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Usuarios</a>
+    <a [routerLink]='["/groups"]' routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Grupo</a>
+    <button class="logout-btn" (click)="authService.logout()">Logout</button>
+</nav>
+<!-- EL RESULTADO DEL ROUTER -->
+<router-outlet/>

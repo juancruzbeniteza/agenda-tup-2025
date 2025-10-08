@@ -1,0 +1,34 @@
+
+<div class="contact-item">
+  <div class="contact-info">
+    <span>Contacto Nº {{ index() + 1 }} {{ contacto().firstName }} {{ contacto().lastName }}</span>
+    <button 
+      class="favorite-btn" 
+      (click)="toggleFavorite()"
+      [disabled]="isTogglingFavorite"
+      [class.is-favorite]="contacto().isFavorite"
+      title="{{ contacto().isFavorite ? 'Quitar de favoritos' : 'Agregar a favoritos' }}">
+      @if(isTogglingFavorite) {
+        ⏳
+      } @else if(contacto().isFavorite) {
+        ⭐
+      } @else {
+        ☆
+      }
+    </button>
+  </div>
+  
+  <div class="contact-actions">
+    <a [routerLink]="['/contacts',contacto().id,'edit']" class="edit-btn">Editar</a>
+    <button 
+      class="delete-btn" 
+      (click)="deleteContact()"
+      [disabled]="isDeleting">
+      @if(isDeleting) {
+        Eliminando...
+      } @else {
+        Borrar
+      }
+    </button>
+  </div>
+</div>

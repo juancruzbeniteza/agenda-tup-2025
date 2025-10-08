@@ -1,0 +1,13 @@
+<div class="contact-list-container">
+  <h1>Contactos</h1>
+
+  <div class="contact-list">
+    @for (contacto of contactsService.contacts; track $index) {
+      <app-contact-list-item [contacto]="contacto" [index]="$index" />
+    } @empty {
+      <p class="empty">No hay contactos, <a routerLink="/contacts/new">agregá uno</a>.</p>
+    }
+  </div>
+
+  <a class="new-contact-btn" routerLink="/contacts/new">Nuevo contacto +</a>
+</div>

@@ -1,0 +1,21 @@
+<div class="login-container">
+  <div class="login-box">
+    <h1 class="title">LOGIN</h1>
+    <p class="subtitle">Ingresá tus credenciales para continuar</p>
+
+    <form #loginForm="ngForm" (ngSubmit)="login(loginForm)">
+      <label for="email">Email</label>
+      <input id="email" type="text" name="email" ngModel placeholder="ejemplo@ejemplo.com">
+
+      <label for="password">Contraseña</label>
+      <input id="password" type="password" name="password" ngModel placeholder="Tu contraseña">
+
+      <button type="submit">Iniciar sesión</button>
+    </form>
+
+    <p class="register">
+      No tenés cuenta?
+      <a routerLink="/register">Registrate</a>
+    </p>
+  </div>
+</div>
