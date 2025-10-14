@@ -13,14 +13,13 @@ export class ContactsService {
   contacts:Contact[] = [];
 
   async createContact(nuevoContacto:NewContact) {
-    if(typeof Swal !== 'undefined') {
-        Swal.fire({
-            title: 'Creando contacto...',
-            allowOutsideClick: false,
-            showConfirmButton: false,
-            willOpen: () => { Swal.showLoading(); }
-        });
-    }
+    // ⚠️ Se eliminó la condición 'typeof Swal'
+    Swal.fire({
+        title: 'Creando contacto...',
+        allowOutsideClick: false,
+        showConfirmButton: false,
+        willOpen: () => { Swal.showLoading(); }
+    });
 
     const res = await fetch(this.URL_BASE, 
       {
@@ -32,40 +31,32 @@ export class ContactsService {
         body: JSON.stringify(nuevoContacto)
       });
       
-    if(typeof Swal !== 'undefined') Swal.close();
+    Swal.close(); // ⚠️ Se eliminó la condición 'typeof Swal'
     
+    // 💡 Validación 401: Manejar expiración de token
+    if (res.status === 401) {
+        this.authService.logout();
+        Swal.fire('Sesión Expirada', 'Tu sesión ha expirado. Por favor, vuelve a iniciar sesión.', 'warning');
+        return;
+    }
+
     if(!res.ok) {
-        if(typeof Swal !== 'undefined') Swal.fire('Error', 'No se pudo crear el contacto.', 'error');
+        Swal.fire('Error', 'No se pudo crear el contacto.', 'error'); // ⚠️ Se eliminó la condición 'typeof Swal'
         return;
     }
     const resContact:Contact = await res.json();
     this.contacts.push(resContact);
     return resContact;
   }
+
+  // 🗑️ MÉTODO CORREGIDO: Se eliminó la confirmación redundante de SweetAlert
   async deleteContact(id:number){
-    if(typeof Swal !== 'undefined') {
-        const result = await Swal.fire({
-            title: '¿Estás seguro?',
-            text: "¡No podrás revertir esto!",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#d33',
-            cancelButtonColor: '#3085d6',
-            confirmButtonText: 'Sí, borrar',
-            cancelButtonText: 'Cancelar'
-        });
-
-        if (!result.isConfirmed) {
-            return false;
-        }
-
-        Swal.fire({
-            title: 'Eliminando...',
-            allowOutsideClick: false,
-            showConfirmButton: false,
-            willOpen: () => { Swal.showLoading(); }
-        });
-    }
+    Swal.fire({
+        title: 'Eliminando...',
+        allowOutsideClick: false,
+        showConfirmButton: false,
+        willOpen: () => { Swal.showLoading(); }
+    });
 
     const res = await fetch(this.URL_BASE+"/"+id, 
       {
@@ -75,26 +66,33 @@ export class ContactsService {
         },
       });
       
-    if(typeof Swal !== 'undefined') Swal.close();
+    Swal.close(); // ⚠️ Se eliminó la condición 'typeof Swal'
     
+    // 💡 Validación 401: Manejar expiración de token
+    if (res.status === 401) {
+        this.authService.logout();
+        Swal.fire('Sesión Expirada', 'Tu sesión ha expirado. Por favor, vuelve a iniciar sesión.', 'warning');
+        return false; 
+    }
+
     if(!res.ok) {
-        if(typeof Swal !== 'undefined') Swal.fire('Error', 'Error al eliminar el contacto.', 'error');
+        Swal.fire('Error', 'Error al eliminar el contacto.', 'error'); // ⚠️ Se eliminó la condición 'typeof Swal'
         return false; 
     }
     
     this.contacts = this.contacts.filter(contact => contact.id !== id);
-    if(typeof Swal !== 'undefined') Swal.fire('¡Borrado!', 'El contacto ha sido eliminado.', 'success');
+    Swal.fire('¡Borrado!', 'El contacto ha sido eliminado.', 'success'); // ⚠️ Se eliminó la condición 'typeof Swal'
     return true; 
   }
+  
   async editContact(contact:Contact){
-    if(typeof Swal !== 'undefined') {
-        Swal.fire({
-            title: 'Guardando cambios...',
-            allowOutsideClick: false,
-            showConfirmButton: false,
-            willOpen: () => { Swal.showLoading(); }
-        });
-    }
+    // ⚠️ Se eliminó la condición 'typeof Swal'
+    Swal.fire({
+        title: 'Guardando cambios...',
+        allowOutsideClick: false,
+        showConfirmButton: false,
+        willOpen: () => { Swal.showLoading(); }
+    });
 
     const res = await fetch(this.URL_BASE+"/"+contact.id, 
       {
@@ -106,10 +104,17 @@ export class ContactsService {
         body: JSON.stringify(contact)
       });
 
-    if(typeof Swal !== 'undefined') Swal.close();
+    Swal.close(); // ⚠️ Se eliminó la condición 'typeof Swal'
     
+    // 💡 Validación 401: Manejar expiración de token
+    if (res.status === 401) {
+        this.authService.logout();
+        Swal.fire('Sesión Expirada', 'Tu sesión ha expirado. Por favor, vuelve a iniciar sesión.', 'warning');
+        return;
+    }
+
     if(!res.ok) {
-        if(typeof Swal !== 'undefined') Swal.fire('Error', 'Error al editar el contacto.', 'error');
+        Swal.fire('Error', 'Error al editar el contacto.', 'error'); // ⚠️ Se eliminó la condición 'typeof Swal'
         return;
     }
     
@@ -119,6 +124,7 @@ export class ContactsService {
     })
     return contact;
   }
+  
   async getContacts(){
     const res = await fetch(this.URL_BASE,
       {
@@ -127,11 +133,19 @@ export class ContactsService {
           Authorization: "Bearer "+this.authService.token
         }
       })
+      // 💡 Validación 401: Manejar expiración de token
+      if (res.status === 401) {
+        this.authService.logout();
+        Swal.fire('Sesión Expirada', 'Tu sesión ha expirado. Por favor, vuelve a iniciar sesión.', 'warning');
+        return;
+      }
+
       if(res.ok){
         const resJson:Contact[] = await res.json()
         this.contacts = resJson;
       }
   }
+  
   async getContactById(id:string | number){
     const res = await fetch(this.URL_BASE+"/"+id,
       {
@@ -140,21 +154,28 @@ export class ContactsService {
           Authorization: "Bearer "+this.authService.token
         }
       })
+      // 💡 Validación 401: Manejar expiración de token
+      if (res.status === 401) {
+        this.authService.logout();
+        Swal.fire('Sesión Expirada', 'Tu sesión ha expirado. Por favor, vuelve a iniciar sesión.', 'warning');
+        return null;
+      }
+      
       if(res.ok){
         const resJson:Contact = await res.json()
         return resJson;
       }
       return null;
   }
+  
   async setFavourite(id:string | number ) {
-    if(typeof Swal !== 'undefined') {
-        Swal.fire({
-            title: 'Actualizando favorito...',
-            allowOutsideClick: false,
-            showConfirmButton: false,
-            willOpen: () => { Swal.showLoading() }
-        });
-    }
+    // ⚠️ Se eliminó la condición 'typeof Swal'
+    Swal.fire({
+        title: 'Actualizando favorito...',
+        allowOutsideClick: false,
+        showConfirmButton: false,
+        willOpen: () => { Swal.showLoading() }
+    });
 
     const res = await fetch(this.URL_BASE+"/"+id+"/favorite", 
       {
@@ -163,12 +184,20 @@ export class ContactsService {
           Authorization: "Bearer "+this.authService.token,
         },
       });
-    if(typeof Swal !== 'undefined') Swal.close();
+    Swal.close(); // ⚠️ Se eliminó la condición 'typeof Swal'
     
-    if(!res.ok) {
-        if(typeof Swal !== 'undefined') Swal.fire('Error', 'No se pudo actualizar el favorito en la API.', 'error');
+    // 💡 Validación 401: Manejar expiración de token
+    if (res.status === 401) {
+        this.authService.logout();
+        Swal.fire('Sesión Expirada', 'Tu sesión ha expirado. Por favor, vuelve a iniciar sesión.', 'warning');
         return false;
     };
+    
+    if(!res.ok) {
+        Swal.fire('Error', 'No se pudo actualizar el favorito en la API.', 'error'); // ⚠️ Se eliminó la condición 'typeof Swal'
+        return false;
+    };
+    
     this.contacts = this.contacts.map(contact => {
       const contactId = typeof id === 'string' ? Number(id) : id; 
 
