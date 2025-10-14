@@ -1,22 +1,20 @@
-
 <div class="contact-item">
-  <div class="contact-info">
+  <a [routerLink]="['/contacts', contacto().id]" class="contact-info">
     <span>Contacto Nº {{ index() + 1 }} {{ contacto().firstName }} {{ contacto().lastName }}</span>
+    
     <button 
       class="favorite-btn" 
-      (click)="toggleFavorite()"
-      [disabled]="isTogglingFavorite"
+      (click)="toggleFavorite($event)" 
       [class.is-favorite]="contacto().isFavorite"
       title="{{ contacto().isFavorite ? 'Quitar de favoritos' : 'Agregar a favoritos' }}">
-      @if(isTogglingFavorite) {
-        ⏳
-      } @else if(contacto().isFavorite) {
+      
+      @if(contacto().isFavorite) {
         ⭐
       } @else {
         ☆
       }
     </button>
-  </div>
+  </a>
   
   <div class="contact-actions">
     <a [routerLink]="['/contacts',contacto().id,'edit']" class="edit-btn">Editar</a>

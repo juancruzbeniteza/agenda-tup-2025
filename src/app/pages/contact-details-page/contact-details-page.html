@@ -1,1 +1,13 @@
-<p>contact-details-page works!</p>
+<div class="contact-details-container">
+    <h1>{{ contacto?.firstName }} {{ contacto?.lastName }}</h1>
+    <p><strong>Teléfono:</strong> {{ contacto?.number }}</p>
+    <p><strong>Email:</strong> {{ contacto?.email }}</p>
+    <p><strong>Dirección:</strong> {{ contacto?.address }}</p>
+    <p><strong>Compañía:</strong> {{ contacto?.company }}</p>
+    <p><strong>Descripción:</strong> {{ contacto?.description }}</p>
+    <div>
+        <img [src]="contacto?.image" alt="Imagen de contacto" />
+    </div>
+
+    <a routerLink="/" class="back-link">⬅ Volver</a>
+</div>

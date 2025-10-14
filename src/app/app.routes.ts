@@ -11,31 +11,36 @@ import { GroupsListPage } from './pages/group-list-page/group-list-page';
 
 export const routes: Routes = [
     {
-        path:"login",
+        path: "login",
         component: LoginPage,
         canActivate: [onlyPublicGuard]
     },
     {
-        path:"register",
+        path: "register",
         component: RegisterPage,
         canActivate: [onlyPublicGuard]
     },
     {
-        path:"",
+        path: "",
         component: LoggedLayout,
         canActivateChild: [onlyUserGuard],
         children: [
             {
-                path:"",
+                path: "",
                 component: ContactListPage
             },
             {
-                path:"contacts/new",
+                path: "contacts/new",
                 component: NewEditContact
             },
-            { path: "contacts/:idContacto/edit",
+            {
+                path: "contacts/:idContacto/edit",
                 component: NewEditContact
-            }, {
+            },
+            {
+                path: "contacts/:id",
+                component: ContactDetailsPage
+            },{
                 path: "groups",
                 component: GroupsListPage
             }, {

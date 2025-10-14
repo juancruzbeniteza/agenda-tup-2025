@@ -2,7 +2,7 @@
   <h1>Contactos</h1>
 
   <div class="contact-list">
-    @for (contacto of contactsService.contacts; track $index) {
+    @for (contacto of getSortedContacts(); track contacto.id) {
       <app-contact-list-item [contacto]="contacto" [index]="$index" />
     } @empty {
       <p class="empty">No hay contactos, <a routerLink="/contacts/new">agregá uno</a>.</p>

@@ -1,13 +1,13 @@
 import { inject, Injectable, OnInit } from '@angular/core';
 import { LoginData } from '../interfaces/auth';
 import { Router } from '@angular/router';
+import Swal from 'sweetalert2';
 
 @Injectable({
   providedIn: 'root'
 })
 export class Auth implements OnInit {
   ngOnInit(): void {
-    // Si tengo sesion iniciada reviso que no este vencida
     if (this.token) {
       this.revisionTokenInterval = this.revisionToken()
     }
@@ -18,6 +18,15 @@ export class Auth implements OnInit {
   revisionTokenInterval:number|undefined;
 
   async login(loginData: LoginData) {
+    if (typeof Swal !== 'undefined') {
+        Swal.fire({
+            title: 'Iniciando sesión...',
+            allowOutsideClick: false,
+            showConfirmButton: false,
+            willOpen: () => { Swal.showLoading(); }
+        });
+    }
+
     const res = await fetch('https://agenda-api.somee.com/api/authentication/authenticate',
       {
         method: "POST",
@@ -27,23 +36,56 @@ export class Auth implements OnInit {
         body: JSON.stringify(loginData),
       }
     )
+    if (typeof Swal !== 'undefined') Swal.close();
+    
     if (res.ok) {
       const resText = await res.text()
       this.token = resText;
       localStorage.setItem("token", this.token);
       this.revisionTokenInterval = this.revisionToken()
+      if (typeof Swal !== 'undefined') {
+          Swal.fire({
+              icon: 'success',
+              title: '¡Bienvenido!',
+              showConfirmButton: false,
+              timer: 1500
+          });
+      }
+    } else {
+        if (typeof Swal !== 'undefined') {
+             Swal.fire({
+                icon: 'error',
+                title: 'Error de inicio de sesión',
+                text: 'Usuario o contraseña incorrectos.',
+             });
+        }
     }
     return res.ok;
   }
 
-  logout() {
+  async logout() {
+    if (typeof Swal !== 'undefined') {
+        const result = await Swal.fire({
+            title: '¿Cerrar Sesión?',
+            text: "¿Estás seguro de que quieres salir?",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Sí, cerrar sesión',
+            cancelButtonText: 'Cancelar'
+        });
+
+        if (!result.isConfirmed) {
+            return; 
+        }
+    }
+    
     localStorage.removeItem("token");
     this.token = null;
     this.router.navigate(["/login"]);
     if(this.revisionTokenInterval) clearInterval(this.revisionTokenInterval);
   }
-
-  /** Revisa cada 10 minutos que el token siga siendo valido */
   revisionToken() {
     return setInterval(() => {
       if (this.token) {

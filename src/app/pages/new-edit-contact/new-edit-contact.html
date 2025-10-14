@@ -45,10 +45,22 @@
         <p class="error">Error indeterminado, intente nuevamente.</p>
         }
         @if(idContacto()){
-        <button [disabled]="newContactForm.invalid">Editar</button>
+        <button type="submit" [disabled]="newContactForm.invalid || isSubmitting">
+            @if (isSubmitting) {
+              Guardando...
+            } @else {
+              Editar
+            }
+        </button>
         } @else {
-        <button [disabled]="newContactForm.invalid">Agregar</button>
+        <button type="submit" [disabled]="newContactForm.invalid || isSubmitting">
+            @if (isSubmitting) {
+              Guardando...
+            } @else {
+              Agregar
+            }
+        </button>
         }
 
     </form>
-</div>ß
+</div>
