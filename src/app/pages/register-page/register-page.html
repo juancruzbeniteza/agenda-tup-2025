@@ -46,8 +46,6 @@
       @if(errorRegister){
         <p class="error">Error al registrar usuario. Verifique los datos e intente nuevamente.</p>
       }
-
-      <!-- Bloqueo de Submit con registerForm.invalid y isLoading -->
       <button [disabled]="registerForm.invalid || isLoading">
         @if(isLoading) {
           Registrando...
