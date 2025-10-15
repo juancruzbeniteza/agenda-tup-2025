@@ -19,11 +19,26 @@
         </div>
         <div>
             <label for="phone">Telefono*</label>
-            <input id="phone" name="number" type="text" [ngModel]="contactoBack?.number" required="true" minlength="3" maxlength="30">
+            <input 
+                id="phone" 
+                name="number" 
+                type="text" 
+                [ngModel]="contactoBack?.number" 
+                required="true" 
+                minlength="3" 
+                maxlength="30"
+                pattern="^[0-9]+$" 
+                #number="ngModel">
+            @if (number.dirty && number.invalid) {
+            <p class="error">El teléfono es obligatorio y solo debe contener números.</p>
+            }
         </div>
         <div>
             <label for="email">Email</label>
-            <input id="email" name="email" type="email" [ngModel]="contactoBack?.email" maxlength="40">
+            <input id="email" name="email" type="email" [ngModel]="contactoBack?.email" maxlength="40" pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$" #email="ngModel">
+             @if (email.dirty && email.invalid) {
+            <p class="error">Debe ser un email válido (ej: nombre@dominio.com).</p>
+            }
         </div>
         <div>
             <label for="favourite">Favorito</label>
