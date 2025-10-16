@@ -29,75 +29,81 @@ $font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif
       transform: translateY(-5px)
       box-shadow: 0 15px 40px rgba(0,0,0,0.15)
 
-    .title
-      font-size: 1.8rem
-      font-weight: 600
-      margin-bottom: 0.3rem
-      color: $text-color
+.title
+  font-size: 1.8rem
+  font-weight: 600
+  margin-bottom: 0.3rem
+  color: $text-color
 
-    .subtitle
-      font-size: 0.95rem
-      color: $subtitle-color
-      margin-bottom: 2rem
+.subtitle
+  font-size: 0.95rem
+  color: $subtitle-color
+  margin-bottom: 2rem
 
-    form
-      text-align: left
+form
+  text-align: left
 
-      label
-        display: block
-        font-size: 0.9rem
-        margin-bottom: 0.3rem
-        color: $text-color
+  label
+    display: block
+    font-size: 0.9rem
+    margin-bottom: 0.3rem
+    color: $text-color
 
-      input
-        width: 100%
-        padding: 0.9rem 1rem
-        margin-bottom: 1.2rem
-        border: 1px solid $input-border
-        border-radius: $border-radius
-        font-size: 1rem
-        transition: border 0.2s ease, box-shadow 0.2s ease
+input
+  width: 100%
+  padding: 0.9rem 1rem
+  margin-bottom: 1.2rem
+  border: 1px solid $input-border
+  border-radius: $border-radius
+  font-size: 1rem
+  transition: border 0.2s ease, box-shadow 0.2s ease
 
-        &:focus
-          border-color: $primary-color
-          box-shadow: 0 0 0 3px rgba(0,122,255,0.2)
-          outline: none
+  &:focus
+    border-color: $primary-color
+    box-shadow: 0 0 0 3px rgba(0,122,255,0.2)
+    outline: none
 
-      button
-        width: 100%
-        padding: 0.95rem
-        background: $primary-color
-        color: white
-        border: none
-        border-radius: $border-radius
-        font-size: 1rem
-        font-weight: 600
-        cursor: pointer
-        transition: background 0.3s ease, transform 0.2s ease
+button
+  width: 100%
+  padding: 0.95rem
+  background: $primary-color
+  color: white
+  border: none
+  border-radius: $border-radius
+  font-size: 1rem
+  font-weight: 600
+  cursor: pointer
+  transition: background 0.3s ease, transform 0.2s ease
 
-        &:hover
-          background: $primary-color-hover
-          transform: translateY(-2px)
+  &:hover
+    background: $primary-color-hover
+    transform: translateY(-2px)
 
-    .register
-      margin-top: 1.5rem
-      font-size: 0.9rem
-      color: $subtitle-color
+.register
+  margin-top: 1.5rem
+  font-size: 0.9rem
+  color: $subtitle-color
 
-      a
-        color: $primary-color
-        text-decoration: none
-        font-weight: 500
+a
+  color: $primary-color
+  text-decoration: none
+  font-weight: 500
 
-        &:hover
-          text-decoration: underline
+  &:hover
+    text-decoration: underline
 
-    a[routerLink="/"]
-      display: inline-block
-      margin-top: 1rem
-      font-size: 0.9rem
-      color: $primary-color
-      text-decoration: none
+a[routerLink="/"]
+  display: inline-block
+  margin-top: 1rem
+  font-size: 0.9rem
+  color: $primary-color
+  text-decoration: none
 
-      &:hover
-        text-decoration: underline
+  &:hover
+    text-decoration: underline
+
+.error-message
+  color: #ff3b30
+  font-size: 0.85rem
+  margin-top: 0.5rem
+  text-align: center
