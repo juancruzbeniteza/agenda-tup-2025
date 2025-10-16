@@ -15,7 +15,7 @@ $font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif
   background: linear-gradient(135deg, #f0f0f5, #ffffff)
   font-family: $font-family
 
-  .login-box // ⬅️ Contexto principal (caja blanca)
+  .login-box 
     background: white
     padding: 3rem 2.5rem
     border-radius: 20px
@@ -34,7 +34,7 @@ $font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif
       margin-bottom: 2rem
       color: $text-color
 
-    form // ✅ CORRECCIÓN 1: 'form' debe estar anidado directamente bajo '.login-box'
+    form 
       text-align: left
 
       div
@@ -46,7 +46,7 @@ $font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif
           margin-bottom: 0.3rem
           color: $text-color
 
-        input // ✅ CORRECCIÓN 2: 'input' es un hermano de 'label' dentro de 'div'
+        input 
           width: 100%
           padding: 0.9rem 1rem
           border: 1px solid $input-border
@@ -59,12 +59,12 @@ $font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif
             box-shadow: 0 0 0 3px rgba(0,122,255,0.2)
             outline: none
 
-      .error // ✅ CORRECCIÓN 3: '.error' anidado bajo 'form' o 'div'
+      .error 
         font-size: 0.8rem
         color: #ff3b30
         margin-top: 0.3rem
 
-      button // ✅ CORRECCIÓN 4: 'button' anidado bajo 'form'
+      button 
         width: 100%
         padding: 0.95rem
         background: $primary-color
@@ -80,16 +80,16 @@ $font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif
           background: $primary-color-hover
           transform: translateY(-2px)
 
-        &:disabled // ✅ CORRECCIÓN 5: ':disabled' es hermano de ':hover:not(:disabled)'
+        &:disabled 
           background: #d1d1d6
           cursor: not-allowed
 
-    .register // ✅ CORRECCIÓN 6: '.register' anidado bajo '.login-box'
+    .register 
       margin-top: 1.5rem
       font-size: 0.9rem
       color: $subtitle-color
 
-      a // ✅ CORRECCIÓN 7: 'a' anidado bajo '.register'
+      a 
         color: $primary-color
         text-decoration: none
         font-weight: 500
